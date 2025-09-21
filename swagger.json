@@ -1,0 +1,97 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "API de Pacientes e Consultas",
+    "version": "1.0.0",
+    "description": "API para login, registro de pacientes, listagem e agendamento de consultas."
+  },
+  "paths": {
+    "/login": {
+      "post": {
+        "summary": "Login de usuário",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "username": { "type": "string" },
+                  "password": { "type": "string" }
+                },
+                "required": ["username", "password"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Login realizado" },
+          "400": { "description": "Dados ausentes" },
+          "401": { "description": "Credenciais inválidas" }
+        }
+      }
+    },
+    "/patients": {
+      "post": {
+        "summary": "Registrar paciente",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "cpf": { "type": "string" },
+                  "name": { "type": "string" }
+                },
+                "required": ["cpf", "name"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": { "description": "Paciente registrado" },
+          "400": { "description": "Dados ausentes" },
+          "409": { "description": "Paciente já registrado" }
+        }
+      },
+      "get": {
+        "summary": "Listar pacientes",
+        "responses": {
+          "200": { "description": "Lista de pacientes" }
+        }
+      }
+    },
+    "/appointments": {
+      "post": {
+        "summary": "Agendar consulta",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "cpf": { "type": "string" },
+                  "datetime": { "type": "string", "format": "date-time" }
+                },
+                "required": ["cpf", "datetime"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": { "description": "Consulta agendada" },
+          "400": { "description": "Dados ausentes" },
+          "409": { "description": "Horário já ocupado" }
+        }
+      },
+      "get": {
+        "summary": "Listar consultas",
+        "responses": {
+          "200": { "description": "Lista de consultas" }
+        }
+      }
+    }
+  }
+}
