@@ -23,4 +23,13 @@ jobs:
       run: npm install
 
     - name: Run tests
-      run: npm test
+      run: npm run test-controller
+
+    - name: Run an API 
+      run: npm start &
+
+    - name: Wait for the API to start
+      run: sleep 5
+
+    - name: Run integration tests
+      run: npm run test-external
