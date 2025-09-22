@@ -25,11 +25,14 @@ jobs:
     - name: Rodar testes unitários (mocados)
       run: npm run test:unit
 
+    - name: Instalar wait-on
+      run: npm install -g wait-on
+
     - name: Subir a API
       run: npm start &
 
-    - name: Esperar a API estar funcionando
-      run: sleep 5
+    - name: Esperar a API estar pronta
+      run: wait-on http://localhost:3000/api-docs
 
     - name: Rodar testes externos de API via HTTP
       run: npm run test:external
