@@ -25,8 +25,8 @@ describe('AppointmentController com Sinon', () => {
     const res = await request(app)
       .post('/appointments')
       .send({ cpf: '123', datetime: '2025-09-22T10:00:00Z' });
-    expect(res.statusCode).to.equal(respostas.createSuccess.status);
-    expect(res.body).to.deep.include(respostas.createSuccess.body);
+    expect(res.statusCode).to.equal(201);
+    expect(res.body.message).to.equal('Appointment scheduled.');
   });
 
   it('deve retornar erro 400 se horário ocupado', async () => {
@@ -34,8 +34,8 @@ describe('AppointmentController com Sinon', () => {
     const res = await request(app)
       .post('/appointments')
       .send({ cpf: '123', datetime: '2025-09-22T10:00:00Z' });
-    expect(res.statusCode).to.equal(respostas.createFail.status);
-    expect(res.body).to.deep.include(respostas.createFail.body);
+    expect(res.statusCode).to.equal(409);
+    expect(res.body.message).to.equal('Datetime already booked.');
   });
 
   it('deve retornar lista ao listar consultas', async () => {

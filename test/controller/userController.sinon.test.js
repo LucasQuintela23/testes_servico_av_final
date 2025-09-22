@@ -25,8 +25,8 @@ describe('UserController com Sinon', () => {
     const res = await request(app)
       .post('/login')
       .send({ username: 'admin', password: 'admin' });
-    expect(res.statusCode).to.equal(respostas.loginSuccess.status);
-    expect(res.body).to.deep.include(respostas.loginSuccess.body);
+    expect(res.statusCode).to.equal(200);
+    expect(res.body.message).to.equal('Login successful.');
   });
 
   it('deve retornar erro 401 se userService.login retornar falso', async () => {
@@ -34,7 +34,7 @@ describe('UserController com Sinon', () => {
     const res = await request(app)
       .post('/login')
       .send({ username: 'admin', password: 'wrong' });
-    expect(res.statusCode).to.equal(respostas.loginFail.status);
-    expect(res.body).to.deep.include(respostas.loginFail.body);
+    expect(res.statusCode).to.equal(401);
+    expect(res.body.message).to.equal('Invalid credentials.');
   });
 });

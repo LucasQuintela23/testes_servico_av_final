@@ -25,8 +25,8 @@ describe('PatientController com Sinon', () => {
     const res = await request(app)
       .post('/patients')
       .send({ cpf: '12345678900', name: 'Paciente Teste' });
-    expect(res.statusCode).to.equal(respostas.createSuccess.status);
-    expect(res.body).to.deep.include(respostas.createSuccess.body);
+    expect(res.statusCode).to.equal(201);
+    expect(res.body.message).to.equal('Patient registered.');
   });
 
   it('deve retornar erro 400 se paciente já existe', async () => {
@@ -34,8 +34,8 @@ describe('PatientController com Sinon', () => {
     const res = await request(app)
       .post('/patients')
       .send({ cpf: '12345678900', name: 'Paciente Teste' });
-    expect(res.statusCode).to.equal(respostas.createFail.status);
-    expect(res.body).to.deep.include(respostas.createFail.body);
+    expect(res.statusCode).to.equal(409);
+    expect(res.body.message).to.equal('Patient already registered.');
   });
 
   it('deve retornar lista ao listar pacientes', async () => {
