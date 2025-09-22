@@ -1,7 +1,9 @@
 {
   "type": "module",
   "scripts": {
-    "test": "mocha \"test/**/*.js\""
+    "test": "mocha \"test/**/*.js\"",
+    "test:unit": "mocha \"test/controller/**/*.js\"",
+    "test:external": "mocha \"test/external/**/*.js\""
   },
   "dependencies": {
     "express": "^5.1.0",
