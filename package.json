@@ -1,6 +1,7 @@
 {
+  "type": "module",
   "scripts": {
-    "test": "jest"
+    "test": "mocha \"test/**/*.js\""
   },
   "dependencies": {
     "express": "^5.1.0",

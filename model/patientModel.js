@@ -1,4 +1,2 @@
 // patientModel.js
-const patients = [];
-
-module.exports = { patients };
+export const patients = [];

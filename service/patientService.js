@@ -1,16 +1,15 @@
 // patientService.js
-const { patients } = require('../model/patientModel');
+import { patients } from '../model/patientModel.js';
 
-function registerPatient(patient) {
-  if (patients.find(p => p.cpf === patient.cpf)) {
-    return false;
+export const patientService = {
+  registerPatient(patient) {
+    if (patients.find(p => p.cpf === patient.cpf)) {
+      return false;
+    }
+    patients.push(patient);
+    return true;
+  },
+  listPatients() {
+    return patients;
   }
-  patients.push(patient);
-  return true;
-}
-
-function listPatients() {
-  return patients;
-}
-
-module.exports = { registerPatient, listPatients };
+};

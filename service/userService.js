@@ -1,9 +1,9 @@
 // userService.js
-const { users } = require('../model/userModel');
+import { users } from '../model/userModel.js';
 
-function login(username, password) {
-  if (!username || !password) return false;
-  return users.find(u => u.username === username && u.password === password);
-}
-
-module.exports = { login };
+export const userService = {
+  login(username, password) {
+    if (!username || !password) return false;
+    return users.find(u => u.username === username && u.password === password);
+  }
+};

@@ -1,16 +1,15 @@
 // appointmentService.js
-const { appointments } = require('../model/appointmentModel');
+import { appointments } from '../model/appointmentModel.js';
 
-function scheduleAppointment({ cpf, datetime }) {
-  if (appointments.find(a => a.datetime === datetime)) {
-    return false;
+export const appointmentService = {
+  scheduleAppointment({ cpf, datetime }) {
+    if (appointments.find(a => a.datetime === datetime)) {
+      return false;
+    }
+    appointments.push({ cpf, datetime });
+    return true;
+  },
+  listAppointments() {
+    return appointments;
   }
-  appointments.push({ cpf, datetime });
-  return true;
-}
-
-function listAppointments() {
-  return appointments;
-}
-
-module.exports = { scheduleAppointment, listAppointments };
+};

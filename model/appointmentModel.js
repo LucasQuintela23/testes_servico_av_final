@@ -1,4 +1,2 @@
 // appointmentModel.js
-const appointments = [];
-
-module.exports = { appointments };
+export const appointments = [];
