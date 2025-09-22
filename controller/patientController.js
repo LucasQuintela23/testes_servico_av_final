@@ -1,9 +1,11 @@
 // patientController.js
+
 import express from 'express';
 import { patientService } from '../service/patientService.js';
+import { authenticateToken } from '../middleware/authMiddleware.js';
 const router = express.Router();
 
-router.post('/', (req, res) => {
+router.post('/', authenticateToken, (req, res) => {
   const patient = req.body;
   if (!patient.cpf || !patient.name) {
     return res.status(400).json({ message: 'CPF and name required.' });
@@ -18,7 +20,7 @@ router.post('/', (req, res) => {
   return res.status(409).json({ message: 'Patient already registered.' });
 });
 
-router.get('/', (req, res) => {
+router.get('/', authenticateToken, (req, res) => {
   return res.json(patientService.listPatients());
 });
 

@@ -1,9 +1,11 @@
 // appointmentController.js
+
 import express from 'express';
 import { appointmentService } from '../service/appointmentService.js';
+import { authenticateToken } from '../middleware/authMiddleware.js';
 const router = express.Router();
 
-router.post('/', (req, res) => {
+router.post('/', authenticateToken, (req, res) => {
   const { cpf, datetime } = req.body;
   if (!cpf || !datetime) {
     return res.status(400).json({ message: 'CPF and datetime required.' });
@@ -18,7 +20,7 @@ router.post('/', (req, res) => {
   return res.status(409).json({ message: 'Datetime already booked.' });
 });
 
-router.get('/', (req, res) => {
+router.get('/', authenticateToken, (req, res) => {
   return res.json(appointmentService.listAppointments());
 });
 

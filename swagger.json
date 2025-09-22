@@ -5,6 +5,15 @@
     "version": "1.0.0",
     "description": "API para login, registro de pacientes, listagem e agendamento de consultas."
   },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  },
   "paths": {
     "/login": {
       "post": {
@@ -33,6 +42,7 @@
     },
     "/patients": {
       "post": {
+        "security": [{ "bearerAuth": [] }],
         "summary": "Registrar paciente",
         "requestBody": {
           "required": true,
@@ -56,6 +66,7 @@
         }
       },
       "get": {
+        "security": [{ "bearerAuth": [] }],
         "summary": "Listar pacientes",
         "responses": {
           "200": { "description": "Lista de pacientes" }
@@ -64,6 +75,7 @@
     },
     "/appointments": {
       "post": {
+        "security": [{ "bearerAuth": [] }],
         "summary": "Agendar consulta",
         "requestBody": {
           "required": true,
@@ -87,6 +99,7 @@
         }
       },
       "get": {
+        "security": [{ "bearerAuth": [] }],
         "summary": "Listar consultas",
         "responses": {
           "200": { "description": "Lista de consultas" }

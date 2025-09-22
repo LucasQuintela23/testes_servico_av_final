@@ -10,7 +10,7 @@ router.post('/', (req, res) => {
   }
   const result = userService.login(username, password);
   if (result && result.token) {
-    return res.status(200).json({ message: 'Login successful.' });
+    return res.status(200).json({ message: 'Login successful.', token: result.token });
   }
   if (result && result.error === 'invalid_data') {
     return res.status(400).json({ message: 'Username and password required.' });
