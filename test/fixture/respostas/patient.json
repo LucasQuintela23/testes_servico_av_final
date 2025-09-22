@@ -1,0 +1,16 @@
+{
+  "createSuccess": {
+    "status": 201,
+    "body": {
+      "id": 1,
+      "name": "Paciente Teste",
+      "cpf": "12345678900"
+    }
+  },
+  "createFail": {
+    "status": 400,
+    "body": {
+      "error": "Dados inválidos"
+    }
+  }
+}

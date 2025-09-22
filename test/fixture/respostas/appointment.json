@@ -1,0 +1,16 @@
+{
+  "createSuccess": {
+    "status": 201,
+    "body": {
+      "id": 1,
+      "patientId": 1,
+      "date": "2025-09-22T10:00:00Z"
+    }
+  },
+  "createFail": {
+    "status": 400,
+    "body": {
+      "error": "Dados inválidos ou conflito de horário"
+    }
+  }
+}

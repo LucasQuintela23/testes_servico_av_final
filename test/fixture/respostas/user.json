@@ -1,0 +1,18 @@
+{
+  "loginSuccess": {
+    "status": 200,
+    "body": {
+      "token": "<jwt_token>",
+      "user": {
+        "id": 1,
+        "name": "Usuário Teste"
+      }
+    }
+  },
+  "loginFail": {
+    "status": 401,
+    "body": {
+      "error": "Credenciais inválidas"
+    }
+  }
+}
