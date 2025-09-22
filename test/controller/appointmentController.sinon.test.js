@@ -4,6 +4,10 @@ import express from 'express';
 import { appointmentService } from '../../service/appointmentService.js';
 import appointmentController from '../../controller/appointmentController.js';
 import { expect } from 'chai';
+import fs from 'fs';
+import path from 'path';
+
+const respostas = JSON.parse(fs.readFileSync(path.resolve('test/fixture/respostas/appointment.json')));
 
 let app;
 describe('AppointmentController com Sinon', () => {
@@ -17,21 +21,21 @@ describe('AppointmentController com Sinon', () => {
   });
 
   it('deve retornar sucesso ao agendar consulta', async () => {
-  sinon.stub(appointmentService, 'scheduleAppointment').returns(true);
+    sinon.stub(appointmentService, 'scheduleAppointment').returns(respostas.createSuccess.body);
     const res = await request(app)
       .post('/appointments')
-      .send({ cpf: '123', datetime: '2025-09-22T10:00:00' });
-  expect(res.statusCode).to.equal(201);
-  expect(res.body.message).to.equal('Appointment scheduled.');
+      .send({ cpf: '123', datetime: '2025-09-22T10:00:00Z' });
+    expect(res.statusCode).to.equal(respostas.createSuccess.status);
+    expect(res.body).to.deep.include(respostas.createSuccess.body);
   });
 
-  it('deve retornar erro 409 se horário ocupado', async () => {
-  sinon.stub(appointmentService, 'scheduleAppointment').returns(false);
+  it('deve retornar erro 400 se horário ocupado', async () => {
+    sinon.stub(appointmentService, 'scheduleAppointment').returns(respostas.createFail.body);
     const res = await request(app)
       .post('/appointments')
-      .send({ cpf: '123', datetime: '2025-09-22T10:00:00' });
-  expect(res.statusCode).to.equal(409);
-  expect(res.body.message).to.equal('Datetime already booked.');
+      .send({ cpf: '123', datetime: '2025-09-22T10:00:00Z' });
+    expect(res.statusCode).to.equal(respostas.createFail.status);
+    expect(res.body).to.deep.include(respostas.createFail.body);
   });
 
   it('deve retornar lista ao listar consultas', async () => {

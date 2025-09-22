@@ -4,6 +4,10 @@ import express from 'express';
 import { patientService } from '../../service/patientService.js';
 import patientController from '../../controller/patientController.js';
 import { expect } from 'chai';
+import fs from 'fs';
+import path from 'path';
+
+const respostas = JSON.parse(fs.readFileSync(path.resolve('test/fixture/respostas/patient.json')));
 
 let app;
 describe('PatientController com Sinon', () => {
@@ -17,21 +21,21 @@ describe('PatientController com Sinon', () => {
   });
 
   it('deve retornar sucesso ao registrar paciente', async () => {
-  sinon.stub(patientService, 'registerPatient').returns(true);
+    sinon.stub(patientService, 'registerPatient').returns(respostas.createSuccess.body);
     const res = await request(app)
       .post('/patients')
-      .send({ cpf: '123', name: 'Paciente' });
-  expect(res.statusCode).to.equal(201);
-  expect(res.body.message).to.equal('Patient registered.');
+      .send({ cpf: '12345678900', name: 'Paciente Teste' });
+    expect(res.statusCode).to.equal(respostas.createSuccess.status);
+    expect(res.body).to.deep.include(respostas.createSuccess.body);
   });
 
-  it('deve retornar erro 409 se paciente já existe', async () => {
-  sinon.stub(patientService, 'registerPatient').returns(false);
+  it('deve retornar erro 400 se paciente já existe', async () => {
+    sinon.stub(patientService, 'registerPatient').returns(respostas.createFail.body);
     const res = await request(app)
       .post('/patients')
-      .send({ cpf: '123', name: 'Paciente' });
-  expect(res.statusCode).to.equal(409);
-  expect(res.body.message).to.equal('Patient already registered.');
+      .send({ cpf: '12345678900', name: 'Paciente Teste' });
+    expect(res.statusCode).to.equal(respostas.createFail.status);
+    expect(res.body).to.deep.include(respostas.createFail.body);
   });
 
   it('deve retornar lista ao listar pacientes', async () => {
